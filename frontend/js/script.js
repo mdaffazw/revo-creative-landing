@@ -1,3 +1,18 @@
+// Navbar — scroll state (transparent dark → solid white once scrolled past hero)
+const navbarEl = document.querySelector(".navbar");
+if (navbarEl) {
+  const SCROLL_THRESHOLD = 80;
+  const updateNavbarState = () => {
+    if (window.scrollY > SCROLL_THRESHOLD) {
+      navbarEl.classList.add("scrolled");
+    } else {
+      navbarEl.classList.remove("scrolled");
+    }
+  };
+  window.addEventListener("scroll", updateNavbarState, { passive: true });
+  updateNavbarState();
+}
+
 // Navbar — mobile toggle
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");

@@ -33,6 +33,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -159,14 +160,22 @@ h1, h2, h3, h4, h5 {
    Navbar
    ========================= */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition), backdrop-filter var(--transition);
+}
+
+.navbar.scrolled {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--color-border);
-  transition: all var(--transition);
+  border-bottom-color: var(--color-border);
+  box-shadow: 0 2px 14px rgba(16, 37, 66, 0.06);
 }
 
 .nav-inner {
@@ -185,7 +194,14 @@ h1, h2, h3, h4, h5 {
 .nav-logo img {
   height: 42px;
   width: auto;
+  transition: opacity var(--transition);
 }
+
+/* Logo swap (default: light/white logo on dark navbar) */
+.nav-logo .logo-dark { display: none; }
+.nav-logo .logo-light { display: block; }
+.navbar.scrolled .nav-logo .logo-light { display: none; }
+.navbar.scrolled .nav-logo .logo-dark { display: block; }
 
 .nav-links {
   display: flex;
@@ -196,10 +212,14 @@ h1, h2, h3, h4, h5 {
 .nav-links a {
   font-weight: 500;
   font-size: 15px;
-  color: var(--color-text);
+  color: rgba(255, 255, 255, 0.88);
   position: relative;
   padding: 4px 0;
   transition: color var(--transition);
+}
+
+.navbar.scrolled .nav-links a {
+  color: var(--color-text);
 }
 
 .nav-links a::after {
@@ -242,10 +262,14 @@ h1, h2, h3, h4, h5 {
   display: block;
   width: 26px;
   height: 2.5px;
-  background: var(--color-navy);
+  background: var(--color-white);
   margin: 5px 0;
   transition: var(--transition);
   border-radius: 2px;
+}
+
+.navbar.scrolled .nav-toggle span {
+  background: var(--color-navy);
 }
 
 .nav-toggle.active span:nth-child(1) {
@@ -1285,7 +1309,7 @@ h1, h2, h3, h4, h5 {
 
 @media (max-width: 720px) {
   .section { padding: 70px 0; }
-  .hero { padding: 80px 0 100px; }
+  .hero { padding: 110px 0 100px; }
   .nav-toggle { display: block; }
   .nav-cta .btn { display: none; }
   .nav-links {
@@ -1303,10 +1327,12 @@ h1, h2, h3, h4, h5 {
     box-shadow: var(--shadow-md);
   }
   .nav-links.open { transform: translateY(0); }
-  .nav-links a {
+  .nav-links a,
+  .navbar.scrolled .nav-links a {
     padding: 14px 24px;
     display: block;
     border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
   }
   .nav-links a:last-child { border-bottom: none; }
   .services-grid { grid-template-columns: 1fr; }
